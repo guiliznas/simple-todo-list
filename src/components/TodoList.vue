@@ -1,5 +1,8 @@
 <template>
   <div class="tab-container">
+    <div style="display: flex; align-items: center; margin-bottom: 30px;">
+      <DigitalClock />
+    </div>
     <div class="tab-buttons">
       <button
         class="tab-button"
@@ -32,7 +35,10 @@
 </template>
 
 <script>
+import DigitalClock from './DigitalClock.vue';
+
 export default {
+  components: {DigitalClock},
   data() {
     return {
       activeTab: 'Trabalho',
@@ -117,7 +123,7 @@ export default {
 }
 
 .tab-button.active {
-  background-color: #007bff;
+  background-color: var(--primary);
   color: #fff;
 }
 
@@ -129,6 +135,7 @@ export default {
   display: flex;
   margin-bottom: 10px;
   align-items: center;
+  position: relative;
 }
 
 .text-input {
@@ -138,6 +145,7 @@ export default {
   outline: none;
   background-color: #f0f0f0;
   color: #333;
+  border-radius: 6px;
 }
 
 .delete-button {
@@ -146,7 +154,9 @@ export default {
   border: none;
   outline: none;
   cursor: pointer;
-  color: #007bff;
+  color: var(--primary);
+  position: absolute;
+  right: -56px;
 }
 
 .delete-button:hover {
@@ -156,7 +166,7 @@ export default {
 .add-button {
   margin-top: 10px;
   padding: 10px;
-  background-color: #007bff;
+  background-color: var(--primary);
   border: none;
   outline: none;
   color: #fff;

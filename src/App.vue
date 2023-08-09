@@ -3,15 +3,18 @@ import TodoList from './components/TodoList.vue'
 </script>
 
 <template>
-  <div>
+  <!-- <div>
     Simple To-do List
-  </div>
+  </div> -->
   <div class="full-center">
     <todo-list />
   </div>
 </template>
 
 <style>
+:root {
+  --primary: #2B5270;
+}
 .full-center {
   display: flex;
   align-items: center;
