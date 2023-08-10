@@ -1,7 +1,7 @@
 <template>
   <div class="tab-container">
     <div class="full-center" style="margin-bottom: 50px;">
-      <img src="src/assets/icon-512-white.png" width="50" />
+      <img src="../assets/icon-512-white.png" width="50" alt="To-do icon" />
       <span style="margin-left: 12px; font-weight: bold;"> Simple to-do list </span>
     </div>
     <div style="display: flex; align-items: center; margin-bottom: 30px">
