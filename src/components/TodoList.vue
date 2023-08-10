@@ -1,6 +1,10 @@
 <template>
   <div class="tab-container">
-    <div style="display: flex; align-items: center; margin-bottom: 30px;">
+    <div class="full-center" style="margin-bottom: 50px;">
+      <img src="src/assets/icon-512-white.png" width="50" />
+      <span style="margin-left: 12px; font-weight: bold;"> Simple to-do list </span>
+    </div>
+    <div style="display: flex; align-items: center; margin-bottom: 30px">
       <DigitalClock />
     </div>
     <div class="tab-buttons">
@@ -20,83 +24,82 @@
       </button>
     </div>
     <div class="tab-content">
-      <div class="tab-pane" v-for="(item, index) in getActiveTabItems" :key="index">
+      <div
+        class="tab-pane"
+        v-for="(item, index) in getActiveTabItems"
+        :key="index"
+      >
         <input
           class="text-input"
           v-model="item.value"
           :placeholder="item.placeholder"
         />
-        <button class="delete-button" @click="clearItem(item)">
-          Done
-        </button>
+        <button class="delete-button" @click="clearItem(item)">Done</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import DigitalClock from './DigitalClock.vue';
+import DigitalClock from "./DigitalClock.vue";
 
 export default {
-  components: {DigitalClock},
+  components: { DigitalClock },
   data() {
     return {
-      activeTab: 'Trabalho',
+      activeTab: "Trabalho",
       tabs: {
         Trabalho: [
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' }
+          { value: "", placeholder: "" },
+          { value: "", placeholder: "" },
+          { value: "", placeholder: "" },
+          { value: "", placeholder: "" },
+          { value: "", placeholder: "" },
         ],
         Casa: [
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' },
-          { value: '', placeholder: '' }
-        ]
-      }
+          { value: "", placeholder: "" },
+          { value: "", placeholder: "" },
+          { value: "", placeholder: "" },
+          { value: "", placeholder: "" },
+          { value: "", placeholder: "" },
+        ],
+      },
     };
   },
   computed: {
     getActiveTabItems() {
       return this.tabs[this.activeTab];
-    }
+    },
   },
   watch: {
     // Observar mudanças nos dados do componente e salvá-los no localStorage
-    'tabs.Trabalho': {
-      handler: function(newVal) {
-        localStorage.setItem('Trabalho', JSON.stringify(newVal));
+    "tabs.Trabalho": {
+      handler: function (newVal) {
+        localStorage.setItem("Trabalho", JSON.stringify(newVal));
       },
-      deep: true
+      deep: true,
     },
-    'tabs.Casa': {
-      handler: function(newVal) {
-        localStorage.setItem('Casa', JSON.stringify(newVal));
+    "tabs.Casa": {
+      handler: function (newVal) {
+        localStorage.setItem("Casa", JSON.stringify(newVal));
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   mounted() {
     // Recuperar dados do localStorage
-    this.tabs.Trabalho = JSON.parse(localStorage.getItem('Trabalho')) || this.tabs.Trabalho;
-    this.tabs.Casa = JSON.parse(localStorage.getItem('Casa')) || this.tabs.Casa;
+    this.tabs.Trabalho =
+      JSON.parse(localStorage.getItem("Trabalho")) || this.tabs.Trabalho;
+    this.tabs.Casa = JSON.parse(localStorage.getItem("Casa")) || this.tabs.Casa;
   },
   methods: {
     changeTab(tabName) {
       this.activeTab = tabName;
     },
     clearItem(item) {
-      item.value = '';
+      item.value = "";
     },
-  }
+  },
 };
 </script>
 
@@ -120,6 +123,11 @@ export default {
   outline: none;
   font-size: 16px;
   color: #333;
+  transition: 0.2s ease all;
+}
+
+.tab-button:not(.active):hover {
+  background-color: #e0e0e0;
 }
 
 .tab-button.active {
@@ -143,24 +151,29 @@ export default {
   padding: 8px;
   border: none;
   outline: none;
-  background-color: #f0f0f0;
-  color: #333;
+  /* background-color: #f0f0f0; */
+  color: #f0f0f0;
   border-radius: 6px;
+  border-color: #FFF;
+  border-style: solid;
+  border-width: 0.1px;
 }
 
 .delete-button {
   padding: 8px;
-  background-color: #f0f0f0;
-  border: none;
+  /* background-color: #f0f0f0; */
   outline: none;
   cursor: pointer;
+  /* color: var(--primary); */
   color: var(--primary);
+  border: 0.1px solid #f0f0f0;
   position: absolute;
-  right: -56px;
+  right: -62px;
 }
 
 .delete-button:hover {
-  color: #0056b3;
+  color: #2a66a5;
+  border-color: #2a66a5;
 }
 
 .add-button {
@@ -197,6 +210,9 @@ export default {
   /* Define a opacidade como 1 para que o botão fique sempre visível em dispositivos móveis */
   .delete-button {
     opacity: 1;
+    position: initial;
+    right: none;
+    margin-left: 6px;
   }
 }
 </style>
