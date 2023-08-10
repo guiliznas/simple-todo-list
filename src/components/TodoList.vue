@@ -1,7 +1,7 @@
 <template>
   <div class="tab-container">
     <div class="full-center" style="margin-bottom: 50px;">
-      <img src="../assets/icon-512-white.png" width="50" alt="To-do icon" />
+      <img src="../assets/icon-512-white.png" width="50px" height="50px" alt="To-do icon" />
       <span style="margin-left: 12px; font-weight: bold;"> Simple to-do list </span>
     </div>
     <div style="display: flex; align-items: center; margin-bottom: 30px">
@@ -29,11 +29,15 @@
         v-for="(item, index) in getActiveTabItems"
         :key="index"
       >
-        <input
-          class="text-input"
-          v-model="item.value"
-          :placeholder="item.placeholder"
-        />
+        <label :for="`item-${index}`">
+          <input
+            class="text-input"
+            v-model="item.value"
+            :placeholder="item.placeholder"
+            :name="`item-${index}`"
+            :id="`item-${index}`"
+          />
+        </label>
         <button class="delete-button" @click="clearItem(item)">Done</button>
       </div>
     </div>
