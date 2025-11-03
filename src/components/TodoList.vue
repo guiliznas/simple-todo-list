@@ -1,12 +1,14 @@
 <template>
   <div class="tab-container">
-    <div class="full-center" style="margin-bottom: 50px;">
-      <img src="../assets/icon-512-white.png" width="50px" height="50px" alt="To-do icon" />
-      <span style="margin-left: 12px; font-weight: bold;"> Simple to-do list </span>
+    <div class="header">
+      <img
+        src="../assets/icon-512-white.png"
+        width="32"
+        height="32"
+        alt="To-do icon"
+      />
     </div>
-    <div style="display: flex; align-items: center; margin-bottom: 30px">
-      <DigitalClock />
-    </div>
+
     <div class="tab-buttons">
       <button
         class="tab-button"
@@ -29,17 +31,25 @@
         v-for="(item, index) in getActiveTabItems"
         :key="index"
       >
-        <label :for="`item-${index}`">
-          <input
-            class="text-input"
-            v-model="item.value"
-            :placeholder="item.placeholder"
-            :name="`item-${index}`"
-            :id="`item-${index}`"
-          />
-        </label>
-        <button class="delete-button" @click="clearItem(item)">Done</button>
+        <input
+          class="text-input"
+          v-model="item.value"
+          placeholder="O que precisa ser feito?"
+          :name="`item-${index}`"
+          :id="`item-${index}`"
+        />
+        <button
+          class="delete-button"
+          @click="clearItem(item)"
+          v-if="item.value"
+        >
+          ✓
+        </button>
       </div>
+    </div>
+
+    <div class="clock-container">
+      <DigitalClock />
     </div>
   </div>
 </template>
@@ -109,114 +119,147 @@ export default {
 
 <style scoped>
 .tab-container {
-  max-width: 600px;
+  max-width: 720px;
   margin: 0 auto;
+  background-color: transparent;
+  border-radius: 12px;
+  box-shadow: none;
+  padding: 30px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.clock-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.header img {
+  filter: none;
+}
+
+.header-title {
+  margin-left: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #f0f0f0;
 }
 
 .tab-buttons {
   display: flex;
+  margin-bottom: 30px;
 }
 
 .tab-button {
   flex: 1;
-  padding: 10px;
-  background-color: #f0f0f0;
+  padding: 12px 20px;
+  background-color: transparent;
   text-align: center;
   cursor: pointer;
   border: none;
   outline: none;
-  font-size: 16px;
-  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
   transition: 0.2s ease all;
+  position: relative;
 }
 
 .tab-button:not(.active):hover {
-  background-color: #e0e0e0;
+  color: #999;
 }
 
 .tab-button.active {
-  background-color: var(--primary);
-  color: #fff;
+  color: #f0f0f0;
+}
+
+.tab-button.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #f0f0f0;
 }
 
 .tab-content {
-  padding: 20px;
+  padding: 0;
 }
 
 .tab-pane {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   align-items: center;
   position: relative;
 }
 
 .text-input {
   flex: 1;
-  padding: 8px;
-  border: none;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #444;
   outline: none;
-  /* background-color: #f0f0f0; */
+  background-color: transparent;
   color: #f0f0f0;
-  border-radius: 6px;
-  border-color: #FFF;
-  border-style: solid;
-  border-width: 0.1px;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: 0.2s ease all;
+}
+
+.text-input:focus {
+  border-color: #888;
+}
+
+.text-input::placeholder {
+  color: #666;
 }
 
 .delete-button {
-  padding: 8px;
-  /* background-color: #f0f0f0; */
+  padding: 8px 12px;
+  background-color: transparent;
   outline: none;
   cursor: pointer;
-  /* color: var(--primary); */
-  color: var(--primary);
-  border: 0.1px solid #f0f0f0;
+  color: #f0f0f0;
+  border: none;
   position: absolute;
-  right: -62px;
+  right: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.2s ease all;
+  opacity: 0;
 }
 
 .delete-button:hover {
-  color: #2a66a5;
-  border-color: #2a66a5;
-}
-
-.add-button {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: var(--primary);
-  border: none;
-  outline: none;
-  color: #fff;
-  cursor: pointer;
-}
-
-.add-button:hover {
-  background-color: #0056b3;
-}
-
-/* Estilo para o botão */
-.delete-button {
-  /* Especifica o estilo padrão do botão */
-  /* ... estilo padrão ... */
-  /* Define a opacidade como 0 para que o botão fique invisível por padrão */
-  opacity: 0;
-  transition: 0.2s ease all;
+  color: #ccc;
+  transform: scale(1.1);
 }
 
 /* Estilo para o botão quando o mouse estiver sobre o item */
 .tab-pane:hover .delete-button {
-  /* Define a opacidade como 1 para que o botão fique visível quando o mouse estiver sobre o item */
   opacity: 1;
 }
 
 /* Estilo para o botão em dispositivos móveis */
 @media (max-width: 768px) {
-  /* Define a opacidade como 1 para que o botão fique sempre visível em dispositivos móveis */
+  .tab-container {
+    padding: 20px;
+    border-radius: 0;
+  }
+
   .delete-button {
     opacity: 1;
     position: initial;
-    right: none;
-    margin-left: 6px;
+    margin-left: 8px;
   }
 }
 </style>

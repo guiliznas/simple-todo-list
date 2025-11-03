@@ -1,7 +1,9 @@
 <template>
   <div id="clock">
+    <p class="date" style="border-right: 1px solid #999; padding-right: 8px">
+      {{ time }}
+    </p>
     <p class="date">{{ date }}</p>
-    <p class="time">{{ time }}</p>
   </div>
 </template>
 
@@ -14,19 +16,17 @@ export default {
     };
   },
   created() {
-    let timerID = setInterval(this.updateTime, 10000);
+    let timerID = setInterval(this.updateTime, 1000);
     this.updateTime();
   },
   methods: {
     updateTime() {
-      const week = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"]; 
+      const week = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
       const cd = new Date();
       this.time =
         this.zeroPadding(cd.getHours(), 2) +
         ":" +
-        this.zeroPadding(cd.getMinutes(), 2) +
-        ":" +
-        this.zeroPadding(cd.getSeconds(), 2);
+        this.zeroPadding(cd.getMinutes(), 2);
       this.date =
         this.zeroPadding(cd.getFullYear(), 4) +
         "-" +
@@ -48,29 +48,24 @@ export default {
 </script>
 
 <style scoped>
-body {
-  background: var(--primary);
-  background: radial-gradient(ellipse at center, #0a2e38 0%, #000000 70%);
-}
 p {
   margin: 0;
   padding: 0;
 }
+
 #clock {
-  color: #daf6ff;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+  color: #f0f0f0;
+  text-shadow: none;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  gap: 8px;
   margin: auto;
 }
-#clock .time {
-  letter-spacing: 0.05em;
-  font-size: 24px;
-  padding: 5px 0;
-}
+
 #clock .date {
   letter-spacing: 0.1em;
-  font-size: 11px;
+  font-size: 13px;
+  color: #999;
+  font-weight: 400;
 }
 </style>
